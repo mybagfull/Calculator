@@ -1,11 +1,17 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlinAndroidKsp)
 }
 
 android {
     namespace = "com.denishrynkevich.calculator"
     compileSdk = 34
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding  = true
+    }
 
     defaultConfig {
         applicationId = "com.denishrynkevich.calculator"

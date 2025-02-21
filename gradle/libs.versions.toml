@@ -17,6 +17,7 @@ navigationRuntimeKtx = "2.8.7"
 navigationRuntimeAndroid = "2.9.0-alpha06"
 lifecycleLivedataCoreKtx = "2.8.7"
 lifecycleViewmodelAndroid = "2.8.7"  # Обновлено
+kspVersion = "2.0.21-1.0.25"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,4 +40,5 @@ androidx-lifecycle-viewmodel-android = { group = "androidx.lifecycle", name = "l
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinAndroidKsp = { id = "com.google.devtools.ksp", version.ref ="kspVersion" }
 
