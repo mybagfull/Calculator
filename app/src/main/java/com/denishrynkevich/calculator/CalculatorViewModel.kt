@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class CalculatorViewModel : ViewModel() {
+    private val calculator = Calculator()
+
     private val _displayValue = MutableLiveData<String>()
     val displayValue: LiveData<String> = _displayValue
 
@@ -13,27 +15,34 @@ class CalculatorViewModel : ViewModel() {
     }
 
     fun onDigitClick(digit: String) {
-        //TODO
+        calculator.appendDigit(digit)
+        _displayValue.value = calculator.currentInput
     }
 
-    fun onDotClick() {
-        //TODO
-    }
 
     fun onOperatorClick(op: String) {
-        //TODO
+        calculator.inputHandleOp(op)
+        _displayValue.value = calculator.currentInput
     }
 
     fun onEqualsClick() {
-        //TODO
+        calculator.calculate()
+        _displayValue.value= calculator.currentInput
     }
 
     fun onClearClick() {
-        //TODO
+        calculator.clear()
+        _displayValue.value = "0"
     }
 
-    fun onChangeSign() {
-        //TODO
+    fun onPlusMinusClick() {
+        calculator.changeSign()
+        _displayValue.value = calculator.currentInput
+    }
+
+    fun onPercentClick() {
+        calculator.calculatePercent()
+        _displayValue.value = calculator.currentInput
     }
 
 }
