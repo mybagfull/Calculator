@@ -2,37 +2,45 @@ package com.denishrynkevich.calculator
 
 class Calculator {
     var currentInput: String = ""
+    var buffInput: String = "0"
     var previousInput: String = ""
     var operationToCalc: String? = null
     var result: Double = 0.0
 
     fun appendDigit(digit: String) {
-        if (currentInput == "0" && digit != ".") {
-            currentInput = digit
-        } else if (digit == "." && currentInput.contains(".")) {
+        if (buffInput == "0" && digit != ".") {
+            buffInput = digit
+        } else if (digit == "." && buffInput.contains(".")) {
             return
         } else {
-            currentInput += digit
+            buffInput += digit
         }
     }
 
     fun inputHandleOp(op: String) {
-        if (currentInput.isNotEmpty()) {
+        if (buffInput.isNotEmpty()) {
             if (previousInput.isNotEmpty()) {
                 calculate()
+                previousInput = result.toString()
+            } else {
+                previousInput = buffInput
             }
             operationToCalc = op
-            previousInput = currentInput
-            currentInput = ""
+            buffInput = ""
         }
     }
 
+    fun clearCalculate() {
+        previousInput = ""
+        operationToCalc = null
+    }
+
     fun calculate() {
-        if (previousInput.isEmpty() || currentInput.isEmpty() || operationToCalc == null) {
+        if (previousInput.isEmpty() || buffInput.isEmpty() || operationToCalc == null) {
             return
         }
         val num1 = previousInput.toDoubleOrNull() ?: 0.0
-        val num2 = currentInput.toDoubleOrNull() ?: 0.0
+        val num2 = buffInput.toDoubleOrNull() ?: 0.0
 
         result = when (operationToCalc) {
             "+" -> num1 + num2
@@ -42,31 +50,30 @@ class Calculator {
             else -> num2
         }
         currentInput = if (result.isNaN()) "Error" else result.toString()
-        previousInput = ""
-        operationToCalc = null
     }
 
     fun clear() {
         currentInput = ""
+        buffInput = ""
         previousInput = ""
         operationToCalc = null
         result = 0.0
     }
 
     fun calculatePercent() {
-        if (currentInput.isNotEmpty()) {
-            val num = currentInput.toDoubleOrNull() ?: 0.0
-            currentInput = (num / 100).toString()
+        if (buffInput.isNotEmpty()) {
+            val num = buffInput.toDoubleOrNull() ?: 0.0
+            buffInput = (num / 100).toString()
         }
     }
 
     fun changeSign() {
-        if (currentInput.isNotEmpty()) {
+        if (buffInput.isNotEmpty()) {
             try {
-                val num = currentInput.toDouble()
-                currentInput = (-num).toString()
+                val num = buffInput.toDouble()
+                buffInput = (-num).toString()
             } catch (e: NumberFormatException) {
-                currentInput = "Error"
+                buffInput = "Error"
             }
         }
     }
